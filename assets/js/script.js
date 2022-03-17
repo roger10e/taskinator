@@ -18,15 +18,28 @@ var taskFormHandler = function(event) {
 
   formE1.reset();
 
+  var isEdit = formE1.hasAttribute("data-task-id");
+
   //package up data as an object
   var taskDataObj = {
         name: taskNameInput,
         type: taskTypeInput
   };
 
-  //send it as an argument to createTaskEl
-  createTaskEl(taskDataObj);
+ // has data attribute, so get task id and call function to complete edit process
+ if (isEdit) {
+    var taskId = formE1.getAttribute("data-task-id");
+    completeEditTask(taskNameInput, taskTypeInput, taskId);
+ } 
+ // no data attribute, so create object as normal and pass to createTaskEl function
+ else {
+    var taskDataObj = {
+    name: taskNameInput,
+    type: taskTypeInput
+    };
 
+    createTaskEl(taskDataObj);
+};
 };
 
 var createTaskEl = function(taskDataObj) {
@@ -135,6 +148,10 @@ var editTask = function(taskId) {
 
     formE1.setAttribute("data-task-id", taskId);
     
+};
+
+var completeEditTask = function (taskName, taskType, taskId) {
+    console.log(taskName, taskType, taskId);
 };
 
 
